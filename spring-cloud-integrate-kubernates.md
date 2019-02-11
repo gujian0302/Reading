@@ -7,12 +7,12 @@
 | 服务发现| Spring Cloud *Eureka* | Kubernetes *etcd* |
 
 ---
-#Spring Cloud Kubernetes
+# Spring Cloud Kubernetes
 
 * spring cloud kubernetes 并没有发布在spring-cloud-dependencies bom 中
 
 
-#Build Local Requirements
+# Build Local Requirements
 1. kubectl create clusterrolebinds
 2. spring application name must be  the same as the Kubernetes servicee name
 3. in order to solve interservice communication. we should additionally add *spring-cloud-starter-kubernetes-ribbon*, spring cloud kubernetes Ribbon provides some beans that force Ribbon to communicate with the kubernetes API through Fabric8 kubernetesClient
