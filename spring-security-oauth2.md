@@ -13,7 +13,7 @@
 
 
 ## JWT 生成流程
-![jwt](spring-security-oauth2/jwt.png ''jwt'')
+![jwt](spring-security-oauth2/jwt.png "jwt")
 
 1. DefaultTokenServices是AuthorizationServerTokenServices的实现，AuthorizationServerTokenServices主要负责token的创建，刷新
 2. TokenStore主要负责token的存储和获取,实现由JdbcTokenStore, RedisTokenStore, JwtTokenStore, InMemoryTokenStore, JwkTokenStore
@@ -22,14 +22,14 @@
 
 
 ## 资源认证
-![resource](spring-security-oauth2/resource.png ''resourceFilter'')
+![resource](spring-security-oauth2/resource.png "resourceFilter")
 
 1. 资源服务器通过@EnableResourceServer来生成一个OAuth2AuthenticationProcessingFilter来将Authorization头中的值转换为上下文的SecurityContext
 2. OAuth2AuthenticationManager 通过TokenStore来将Token转换为认证上下文,TokenServices.loadAuthentication(token);
 
 ## 方法级安全认证
-![method security](spring-security-oauth2/methodSecurity.png ''method Security'')
-![method security](spring-security-oauth2/after.png ''method Security'')
+![method security](spring-security-oauth2/methodSecurity.png "method Security")
+![method security](spring-security-oauth2/after.png "method Security")
 1. spring security method 方法级注解具体使用的类
 2. AffirmativeBased 只要有一个通过就成立
 3. ConsensusBased 投票成立
