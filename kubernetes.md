@@ -17,7 +17,7 @@
 2. kube-proxy 实现kubernetes Server通信负载均衡
 3. Docker Engine: Docker引擎
 
-### Deployment
+### Deployment(全自动调度)
 
 更好的处理pod的编排问题,作为RC(Replication Controller)的升级，支持滚动升级，回滚，暂停修改
 
@@ -35,6 +35,8 @@ spec:
     tier: frontend
 ```
 
+
+### DaemonSet
 
 
 ### Horizontal Pod Autoscaler
