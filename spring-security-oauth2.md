@@ -2,7 +2,7 @@
 ----
 
 ## 认证流程
-![基本认证](spring-security-oauth2/oauth2.png ''客户端认证'')
+![基本认证](spring-security-oauth2/oauth2.png "客户端认证")
 
 1. 通过BasicAuthenticationFilter过滤器, 从Header("Authorization")中获取username和password(即oauth2 clientId, password),通过ProviderManager对clientId和password进行认证
 2. ProviderManager是AuthenticationManager的实现，包含一系列的AuthenticationProvider，迭代使用providers进行认证，返回认证结果
