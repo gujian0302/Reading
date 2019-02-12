@@ -40,26 +40,6 @@ spec:
 
 在每一个Node上仅运行一份Pod的副本实例
 
-
-### Horizontal Pod Autoscaler
-
-自动拓容
-
-```
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: php-apache
-  namespace: default
-spec:
-  maxReplicas: 10
-  minReplicas: 1
-  scaleTargetRef:
-    kind: Deployment
-    name: php-apache
-  targetCPUUtilizationPercentage: 90
-```
-
 ### StatefulSet
 
 面向有状态的服务，mysql, mongodb,zookeeper
