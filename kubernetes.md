@@ -83,6 +83,88 @@ spec:
 
 ### Ingress
 
+将不同的URL地址访问请求转发到护短不同的Service,以实现Http层业务路由机制
+
+```
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: nginx-ingress-lb
+  labels:
+    name: nginx-ingress-lb
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      labels:
+        name: nginx-ingress-lb
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - image: gcr.io/google_containers/nginx-ingress-controller: 0.9.0-beta.2
+          name: nginx-ingress-lb
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+      ports:
+        - containerPort: 80
+          hostPort:80
+        - containerPort: 443
+          hostPort: 443
+
+      args:
+      - /nginx-ingress-controller
+      - --default-backend-service=${POD_NAMESPACE}/default-http-backend
+
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: default-http-backend
+  labels:
+    k8s-app: default-http-backend
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: default-http-backend
+    spec:
+      image: gcr.io/googleCotnainers/defaultbackend:1.0
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: default-http-backend
+  namespace: kube-system
+  labels:
+    k8s-app: default-http-backend
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    k8s-app: default-http-backend
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mywebsite-ingress
+spec:
+  rules:
+  - host: mywebsite.com
+    http:
+      paths: 
+      - path: /demo
+        backend:
+          serviceName: webapp
+          servicePort: 8080
+
+```
+
 ### apiVersion
 
 | Kind | apiVersion|
@@ -212,3 +294,35 @@ Sometimes you don't need or want load-balancing and a single service IP. In this
 
 ### StatefulSet(有状态的集群)
 a StatefulSet maintains a sticky indentity for each of their pods. These pods are created from the same spec, but are not interchangeable.each has a persistent identifier that it maintains across any rescheduling.
+
+### 在集群外部访问Pod或Service
+
+1. pod:容器的端口映射到物理机上
+2. pod:hostNetwork=true，将该Pod中所有的容器的端口号都将直接映射到物理机上
+3. 将Server端口映射到物理机
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+spec: 
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 8081
+  selector:
+    app: webapp
+```
+
+1. 设置Service类型为NodePort
+2. 设置LoadBalancer映射到云服务器LoadBalancer
+
+
+### DNS 服务
+
+1. etcd: DNS 存储
+2. kube2sky: 将Kubernetes Master中的Service注册到etcd
+3. skuDNS: 提供DNS域名解析服务
+4. healthz: 提供对skydns服务的健康检查功能
