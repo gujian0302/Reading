@@ -34,3 +34,11 @@
 2. AffirmativeBased 只要有一个通过就成立
 3. ConsensusBased 投票成立
 4. UnanimousBased 全部通过才成立
+
+```
+## 动态角色
+## id 为组织id 用户拥有某个组织的TAKE的权限, 例如ROLE_TAKE_1
+## 执行时,根据获取数据的id，拼接成对应的权限,判断用户是否有这个权限
+@PreAuthorize(value = "hasRole('ROLE_TAKE_'.concat(#id))")
+  public GalleryGto get(@RequestParam Long id) {
+```
