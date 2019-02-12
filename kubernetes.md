@@ -38,6 +38,8 @@ spec:
 
 ### DaemonSet
 
+在每一个Node上仅运行一份Pod的副本实例
+
 
 ### Horizontal Pod Autoscaler
 
