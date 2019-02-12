@@ -67,6 +67,7 @@ spec:
 ### Service
 
 通过Label Selector来定义一个服务的访问入口地址，提供一个全局唯一的虚拟ip(clusterIp)，通过负载均衡器，发送到后端的某个Pod上面
+通过创建Service,可以为一组具有相同功能的容器提供一个统一个入口地址，并且将请求负载均衡分发到后端的各个容器应用上
 
 ```
 apiVersion: v1
@@ -120,3 +121,94 @@ spec:
 | Service | v1|
 | StatefulSet | apps/v1| 
 
+### Job 批处理调度
+
+1. Job Template Expansion模式: 一个Job对象对应一个待处理的WorkItem
+2. Queue With Pod Per Work Item: Job会启动N个Pod,每个Pod对应一个WorkItem
+3. Queue With Variable Pod Count 模式： 也是采用一个任务队列存放WorkItem,Job启动的Pod的数量是可变的
+
+### CronJob 定时任务
+
+--runtime-config=batch/v2alpha1=true
+Minutes Hours DayOfMonth Month DayOfWeek Year
+
+```
+#cron.yaml
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec: containers:
+        - name: hello
+          image: busybox
+          args:
+          - /bin/sh
+          - -c
+          - date;/ echo Hello from the Kubernetes cluster
+        restartPolicy: OnFailure
+
+kubectl create -f cron.yaml
+```
+
+### Deployment 升级和回滚
+
+RollingUpdate策略
+
+1. Recreate 重建 先全部杀掉正在运行的Pod spec.strategy.type=Recreate
+2. RollingUpdate 滚动更新 spec.strategy.type=RollingUpdate
+     spec.strategy.rollingUpdate.maxUnavaiable
+     spec.strategy.rollingUpdate.maxSurge
+
+```
+##设置新的镜像
+kubectl set image deploy/nginx-deployment nginx=nginx:1.9.1
+
+##查看升级状态
+kubectl rollout status deploy/nginx-deployment
+
+##回滚
+kubectl rollout history deployment/nginx-deployment
+kubectl rollout history deployment/nginx-deployment --revision=3
+kubectl rollout undo deployment/nginx-deployment
+kubectl rollout undo deployment/nginx-deployment --to-revision=2
+
+
+##暂停更新,以更改资源设置等
+kubectl rollout pause deployment/nginx-deployment
+kubectl rollout resume deployment/nginx-deployment
+
+```
+
+##### compare with rc
+
+rc滚动升级不含有deployment应用版本升级过程中的历史记录，新旧版本数量的精细控制等功能
+
+
+### HPA(Horizontal Pod Autoscaler)
+
+```
+#hpa-php-apache.yaml
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: php-apache
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1/beta1
+    kind: Deployment
+    name: php-apache
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+```
+
+### HeadLess Service
+Sometimes you don't need or want load-balancing and a single service IP. In this case, you can create "headless" service by specifying "None" for the clusterIp 
+
+### StatefulSet(有状态的集群)
+a StatefulSet maintains a sticky indentity for each of their pods. These pods are created from the same spec, but are not interchangeable.each has a persistent identifier that it maintains across any rescheduling.
