@@ -5,3 +5,5 @@
 [kubernetes基本概念](kubernetes.md)
 
 [kubernetes调度](kubernetes-node.md)
+
+[spring-cloud集成kubernetes](spring-cloud-integrate-kubernetes.md)
