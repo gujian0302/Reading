@@ -46,3 +46,6 @@
 #### security spel uml class diagram
 
 ![spel class diagram](spring-security-oauth2/securityExpression.png "spring security expression")
+
+### security interceptor sequence diagram
+![security interceptor sequence diagram](spring-security-oauth2/SecurityInterceptorSequenceDiagram.png "sequence diagram")
