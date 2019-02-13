@@ -47,5 +47,8 @@
 
 ![spel class diagram](spring-security-oauth2/securityExpression.png "spring security expression")
 
+### expression handler
+![expression handler](spring-security-oauth2/expressionHandler.png "expression Handler")
+
 ### security interceptor sequence diagram
 ![security interceptor sequence diagram](spring-security-oauth2/SecurityInterceptorSequenceDiagram.png "sequence diagram")
