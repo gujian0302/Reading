@@ -42,3 +42,7 @@
 @PreAuthorize(value = "hasRole('ROLE_TAKE_'.concat(#id))")
   public GalleryGto get(@RequestParam Long id) {
 ```
+
+#### security spel uml class diagram
+
+![spel class diagram](spring-security-oauth2/securityExpression.png "spring security expression")
