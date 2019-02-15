@@ -11,6 +11,7 @@
 1. ionic cordova run ios --device
 2. ionic cordova run ios --list
 3. ionic cordova run ios --release --buildConfig=myBuildConfig.json --target=iPhone-5
+5. ionic cordova run android(debug)
 
 ## ionic 模拟
 
