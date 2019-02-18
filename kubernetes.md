@@ -306,3 +306,6 @@ spec:
 2. kube2sky: 将Kubernetes Master中的Service注册到etcd
 3. skuDNS: 提供DNS域名解析服务
 4. healthz: 提供对skydns服务的健康检查功能
+
+### 阿里云Kubernetes免密
+[https://help.aliyun.com/document_detail/103178.html?spm=5176.10695662.1996646101.searchclickresult.31544983xtHFm5](https://help.aliyun.com/document_detail/103178.html?spm=5176.10695662.1996646101.searchclickresult.31544983xtHFm5)
