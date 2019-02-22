@@ -10,6 +10,7 @@
 1. minikube start --help
 2. [https://kubernetes.io/docs/setup/minikube/#using-minikube-with-an-http-proxy](https://kubernetes.io/docs/setup/minikube/#using-minikube-with-an-http-proxy)
 
+![minikube](./success.png)
 
 1. 使用阿里云编译的minikube,修改了成了国内镜像[https://yq.aliyun.com/articles/221687](https://yq.aliyun.com/articles/221687)
 2. 在虚拟机中手动下载对应的版本的镜像在阿里云中的镜像，然后打上gcr.io的域名标签 [https://github.com/chunchill/minikube-startup-china](https://github.com/chunchill/minikube-startup-china)
