@@ -6,4 +6,6 @@
 
 [kubernetes调度](kubernetes-node.md)
 
+[minikube安装](minikube.md)
+
 [spring-cloud集成kubernetes](spring-cloud-integrate-kubernetes.md)
