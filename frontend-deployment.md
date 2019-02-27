@@ -16,5 +16,3 @@ docker login registry.cn-shanghai.aliyun.com
 kubectl 滚动升级镜像
 
 1 . kubectl set image deployment/admin image=admin-web:xx.xx.xx
-
-
